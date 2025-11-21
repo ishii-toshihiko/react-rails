@@ -1,0 +1,54 @@
+body{
+
+.contact-button {
+  color: white;
+  background-color: gray;
+  position: relative;
+  left: 5px;;
+}
+
+.contact-theme {
+  position: relative;
+  top: 10px;
+}
+
+.contact-field {
+  display: flex;
+  width: 100%;
+}
+
+.contact-name {
+  margin: 10px;
+  width: 40%;
+}
+.contact-email {
+  margin: 10px 10px 10px 0;
+  width: 60%;
+}
+.contact-message {
+  margin: 0 10px 10px 10px;
+}
+
+.contact-logo {
+  font-style: italic;
+  font-size: 1.2rem; /* xs: スマホ */
+  text-align: left;
+  font-weight: bold;
+  @media (min-width: 600px) {
+    font-size: 1.2rem; /* sm: タブレット */
+  }
+  @media (min-width: 900px) {
+    font-size: 1.5rem; /* md: デスクトップ */
+  }
+  @media (min-width: 1200px) {
+    font-size: 1.8rem; /* lg: デスクトップ */
+  }
+  @media (min-width: 1536px) {
+    font-size: 2rem; /* xl: デスクトップ */
+  }
+}
+
+.contact-address {
+  border-color: white;
+}
+}

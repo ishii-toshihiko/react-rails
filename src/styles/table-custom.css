@@ -1,0 +1,101 @@
+body{                             /*global(main.tsx)で読み込む時はbody{}が必要*/
+  .table-cell-left {
+    position: relative;
+    left: -15px;
+    border: 1px solid lightgray;
+    word-break: keep-all;
+  }
+
+  .table-base {
+    background-color:aliceblue;
+    table-layout: fixed;
+    margin-bottom: 30px;
+  }
+
+  .table-container-size {
+    width: 100%;
+    padding: 4px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  @media (min-width: 600px) {
+    .table-container-size {
+      width: 80%;
+    }
+  }
+  @media (min-width: 900px) {
+    .table-container-size {
+      width: 60%;
+    }
+  }
+
+  .table-button {
+    background-color: green;
+    margin-top: 25px;
+  }
+
+  .table-cell-std {
+    font-size: 0.7rem; /* xs: スマホ */
+    border: 1px solid lightgray;
+    @media (min-width: 600px) {
+      font-size: 0.9rem; /* sm: タブレット */
+    }
+    @media (min-width: 900px) {
+      font-size: 1.0rem; /* md: デスクトップ */
+    }
+    @media (min-width: 1200px) {
+      font-size: 1.2rem; /* lg: デスクトップ */
+    }
+    @media (min-width: 1536px) {
+      font-size: 1.4rem; /* xl: デスクトップ */
+    }
+  }
+
+  .table-cell-theme {
+    font-size: 0.7rem; /* xs: スマホ */
+    border: 1px solid white;
+    text-align: center;
+    @media (min-width: 600px) {
+      font-size: 0.9rem; /* sm: タブレット */
+    }
+    @media (min-width: 900px) {
+      font-size: 1.0rem; /* md: デスクトップ */
+    }
+    @media (min-width: 1200px) {
+      font-size: 1.2rem; /* lg: デスクトップ */
+    }
+    @media (min-width: 1536px) {
+      font-size: 1.4rem; /* xl: デスクトップ */
+    }
+  }
+
+  /* Rating用のフォントサイズ */
+  .rating-size {
+    position: relative;
+    left: -15px;
+    font-size: 0.9rem;
+  }
+
+  @media (min-width: 600px) {
+    .rating-size {
+      font-size: 1.2rem;
+    }
+  }
+  @media (min-width: 900px) {
+    .rating-size {
+      font-size: 1.5rem;
+    }
+  }
+  @media (min-width: 1200px) {
+    .rating-size {
+      font-size: 2.2rem;
+    }
+  }
+  @media (min-width: 1536px) {
+    .rating-size {
+      font-size: 2.6rem;
+    }
+  }
+
+  
+}

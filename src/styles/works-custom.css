@@ -1,0 +1,41 @@
+body{
+
+.works-header {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.works-button {
+  background-color: blue;
+  color: white;
+  width: 220;
+  margin-right: 20px;
+}
+
+.works-note {
+  border-color: white;
+}
+
+@media (min-width: 600px) {
+  .works-button {
+    font-size: 1.2rem;
+  }
+}
+@media (min-width: 900px) {
+  .works-button {
+    font-size: 1.3rem;
+  }
+}
+@media (min-width: 1200px) {
+  .works-button {
+    font-size: 1.6rem;
+  }
+}
+@media (min-width: 1536px) {
+  .works-button {
+    font-size: 2.0rem;
+  }
+}
+
+}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>404 - Not Found</title>
+    <script type="text/javascript">
+      // GitHub Pages の SPA 対応リダイレクト
+      var redirectTo = '/';
+      var currentPath = window.location.pathname;
+
+      // クエリやハッシュも保持
+      var query = window.location.search || '';
+      var hash = window.location.hash || '';
+
+      // index.html にリダイレクト
+      window.location.replace(redirectTo + query + hash);
+    </script>
+  </head>
+  <body>
+    <h1>404 - ページが見つかりません</h1>
+    <p>リダイレクト中です...</p>
+  </body>
+</html>

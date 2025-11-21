@@ -1,0 +1,65 @@
+body{
+
+.skill-card-base {
+  background-color: greenyellow;
+  margin-top: 2;
+}
+
+/* タイトルボックス */
+.experience-title {
+  font-size: 1rem;
+  padding: 6.4px; /* MUI spacing: 0.8 * 8px */
+  background-color: green;
+  border-radius: 8px; /* MUI borderRadius: 1 = 8px */
+  color: white;
+  text-align: center;
+}
+
+@media (min-width: 600px) {
+  .experience-title {
+    font-size: 1.2rem;
+  }
+}
+@media (min-width: 900px) {
+  .experience-title {
+    font-size: 1.3rem;
+  }
+}
+@media (min-width: 1200px) {
+  .experience-title {
+    font-size: 1.6rem;
+  }
+}
+@media (min-width: 1536px) {
+  .experience-title {
+    font-size: 2.0rem;
+  }
+}
+
+/* 内容ボックス */
+.experience-body {
+  font-size: 0.9rem;
+}
+
+@media (min-width: 600px) {
+  .experience-body {
+    font-size: 1.2rem;
+  }
+}
+@media (min-width: 900px) {
+  .experience-body {
+    font-size: 1.3rem;
+  }
+}
+@media (min-width: 1200px) {
+  .experience-body {
+    font-size: 1.6rem;
+  }
+}
+@media (min-width: 1536px) {
+  .experience-body {
+    font-size: 2.0rem;
+  }
+}
+
+}

@@ -1,0 +1,47 @@
+/* styles/swiper-custom.css */
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: white;
+}
+
+:root {
+  --swiper-navigation-size: 20px;     /* 矢印アイコンのサイズを小さく */
+}
+
+.slide-content {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 350px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 16px; /* MUIのgap: 2はtheme.spacing(2) → 8px * 2 = 16px */
+  padding: 16px;
+}
+
+.slide-box {
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid #ccc;
+  width: 260px;
+  height: 180px;
+}
+@media (min-width: 600px) {
+  .slide-box {
+    width: 300px;
+    height: 190px;
+  }
+}
+@media (min-width: 900px) {
+  .slide-box {
+    height: 200px;
+  }
+}
