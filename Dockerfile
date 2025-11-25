@@ -14,7 +14,6 @@
     # Vite が参照する環境変数は VITE_ プレフィックスにすること
     ENV VITE_API_BASE_URL=${VITE_API_BASE_URL}
     ENV VITE_BASE_URL=${VITE_BASE_URL}
-    COPY .env.production .env.production
     RUN echo "VITE_API_BASE_URL=${VITE_API_BASE_URL}" > .env.production
 
     RUN npm run build
