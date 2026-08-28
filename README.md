@@ -47,3 +47,58 @@
             `http://localhost:5173/`
         1. 画面右上の`ログインページへ`を押す
         1. 表示されたログイン画面より登録したメールアドレス：`email`とパスワード：`password`でログインする
+
+## デプロイ（Cloud Run）
+
+`main` への push で [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) が実行される。  
+Vite でビルドした静的ファイルを nginx が **8080** で配信する。
+
+### 事前準備（GCP）
+
+1. Artifact Registry リポジトリ `frontend` を作成（未作成の場合）
+
+```sh
+gcloud artifacts repositories create frontend \
+  --repository-format=docker \
+  --location=asia-northeast1 \
+  --project=YOUR_PROJECT_ID
+```
+
+`ishii-portfolio` では現時点で `frontend` リポジトリ未作成のため、初回デプロイ前に上記が必要。
+
+2. CI 用サービスアカウント（`GCP_SA_KEY`）に付与
+
+- `roles/artifactregistry.writer`
+- `roles/run.admin`
+- `roles/iam.serviceAccountUser`
+
+3. [rails-api](https://github.com/ishii-toshihiko/rails-api) を Cloud Run にデプロイ済みであること
+
+### GitHub Secrets（react-rails リポジトリ）
+
+| Secret | 例 | 用途 |
+|--------|-----|------|
+| `GCP_PROJECT_ID` | `ishii-portfolio` | gcloud / イメージパス |
+| `GCP_SA_KEY` | SA JSON 全体 | GCP 認証 |
+| `VITE_API_BASE_URL` | `https://rails-api-885483537018.asia-northeast1.run.app/v1` | ビルド時 API ベース URL（末尾 `/v1`） |
+| `VITE_BASE_URL` | `/` | Router basename（任意・未設定時 `/`） |
+
+`VITE_*` はビルド時に JS へ固定される。API URL を変えたら再デプロイが必要。
+
+### rails-api 側 CORS
+
+[config/initializers/cors.rb](../rails-api/config/initializers/cors.rb) の `origins` に react-rails の Cloud Run URL が含まれていることを確認する。URL が変わった場合は rails-api を再デプロイする。
+
+### デプロイ後の確認
+
+```sh
+gcloud run services describe react-rails \
+  --region=asia-northeast1 \
+  --project=YOUR_PROJECT_ID \
+  --format='value(status.url)'
+```
+
+- Cloud Run URL で Home が表示される
+- `/about` 等を直接開いても SPA が 404 にならない
+- DevTools で API が `VITE_API_BASE_URL` 向けに呼ばれる
+- ログイン後 `access-token` / `client` / `uid` が localStorage に入る
