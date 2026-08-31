@@ -11,11 +11,12 @@ interface Skill {
   term: number
 }
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
+
 const SkillTable = () => {
   const [skills, setSkills] = useState<Skill[]>([])
-  const DEFAULT_API_LOCALHOST = import.meta.env.VITE_API_BASE_URL;
   useEffect(() => {
-    axios.get(`${DEFAULT_API_LOCALHOST}/skills`)
+    axios.get(`${API_BASE_URL}/skills`)
     .then(response => {
         setSkills(response.data)
     })

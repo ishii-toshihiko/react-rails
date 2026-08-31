@@ -27,7 +27,7 @@ const App=()=>{
   // ログイン状態を確認
   useEffect(() => {
     setLoggedIn(isAuthenticated())
-  })
+  }, [])
 
    return(
     <>
