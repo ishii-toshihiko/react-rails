@@ -2,7 +2,7 @@ import { ListItem, ListItemText, Divider,ListItemIcon } from "@mui/material"
 import CallIcon from '@mui/icons-material/Call'
 import BusinessIcon from '@mui/icons-material/Business'
 import EmailIcon from '@mui/icons-material/Email'
-import { useState } from 'react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 import { TextField, Button, Box } from '@mui/material'
 
 
@@ -28,12 +28,12 @@ const Contact=()=>{
     message: '',
   })
 
-  const handleChange = (e:any) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   }
 
-  const handleSubmit = (e:any) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('送信内容:', formData);
     // ここでメール送信処理を追加（例：EmailJS、Formspree、Rails APIなど）

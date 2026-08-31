@@ -36,7 +36,7 @@ const About =()=>{
           <LanguageIcon style={{color:"green"}}/>
         </ListItemIcon>
         <ListItemText>
-          語学　TOEIC　L&R　610点取得（2018年12月）
+          語学 TOEIC L&R 610点取得（2018年12月）
         </ListItemText>
       </ListItem>
 
@@ -56,7 +56,7 @@ const About =()=>{
           <PoolIcon style={{color:"black"}}/>
         </ListItemIcon>
         <ListItemText>
-          日本水泳連盟　泳力検定１級合格（2018年10月）
+          日本水泳連盟 泳力検定１級合格（2018年10月）
         </ListItemText>
       </ListItem>
 
@@ -65,7 +65,7 @@ const About =()=>{
           <ColorizeIcon style={{color:"black"}}/>
         </ListItemIcon>
         <ListItemText>
-          日本剣道連盟　剣道初段取得（19〇〇年）
+          日本剣道連盟 剣道初段取得（19〇〇年）
         </ListItemText>
       </ListItem>
     </List>
