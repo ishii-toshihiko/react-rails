@@ -48,10 +48,76 @@
         1. 画面右上の`ログインページへ`を押す
         1. 表示されたログイン画面より登録したメールアドレス：`email`とパスワード：`password`でログインする
 
-## デプロイ（Cloud Run）
+## デプロイ（Firebase Hosting）
 
-`main` への push で [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) が実行される。  
-Vite でビルドした静的ファイルを nginx が **8080** で配信する。
+静的ファイルは [Firebase Hosting](https://console.firebase.google.com/project/ishii-portfolio/hosting?authuser=1) が配信する。  
+API（認証・スキル）はこれまでどおり Cloud Run の [rails-api](https://github.com/ishii-toshihiko/rails-api) を叩く。
+
+プロジェクト ID は `.firebaserc` の `ishii-portfolio`。`firebase.json` の `public` は Vite の `dist`。`/about` などの直リンクは nginx の `try_files` 相当として、全パスを `index.html` へ rewrite する。
+
+### ローカル確認
+
+API は今までどおり Docker の Rails（`http://localhost:3000`）を使う。Hosting の SPA rewrite だけを見るときは、ビルド成果物を Firebase のエミュレータで開く。
+
+```sh
+cd /home/＜ユーザー＞/react-rails
+npm ci
+npm run build
+firebase emulators:start --only hosting
+```
+
+エミュレータの URL（通常 `http://localhost:5000`）で Home が出ること、`/about` を直接開いても 404 にならないことを確認する。ログインとスキル取得は、`VITE_API_BASE_URL` がローカル Rails を向いているときにだけ行う。
+
+`firebase deploy` は CI または明示的な本番反映のときだけ実行する。ローカル確認では使わない。
+
+### 本番デプロイ（手動）
+
+ビルド時に API URL が JS へ埋め込まれる。`VITE_API_BASE_URL` は Cloud Run の rails-api（末尾 `/v1`）にする。
+
+```sh
+cd /home/＜ユーザー＞/react-rails
+npm ci
+VITE_API_BASE_URL=https://rails-api-885483537018.asia-northeast1.run.app/v1 \
+VITE_BASE_URL=/ \
+  npm run build
+firebase deploy --only hosting --project ishii-portfolio
+```
+
+CI は `main` への push で [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) が動く（lint / knip → `npm run build` → `firebase deploy --only hosting`）。Secret `FIREBASE_TOKEN` はリポジトリに置かず GitHub Secrets のみ。
+
+現行ワークフローは `GCP_PROJECT_ID` / `GCP_SA_KEY` を使わない。残っていても無視される。旧 Cloud Run 用の値は下の「旧・参考」を見る。
+
+### GitHub Secrets（react-rails リポジトリ）
+
+| Secret | 例 | 用途 |
+|--------|-----|------|
+| `VITE_API_BASE_URL` | `https://rails-api-885483537018.asia-northeast1.run.app/v1` | ビルド時 API ベース URL（末尾 `/v1`） |
+| `VITE_BASE_URL` | `/` | Router basename（任意・未設定時 `/`） |
+| `FIREBASE_TOKEN` | `firebase login:ci` の出力 | CI から Hosting へデプロイ（チャットに貼らない） |
+
+`VITE_*` はビルド時に JS へ固定される。API URL を変えたら再デプロイが必要。
+
+### rails-api 側 CORS
+
+[config/initializers/cors.rb](../rails-api/config/initializers/cors.rb) の `origins` に Firebase Hosting の URL を含める。
+
+- `http://localhost:5173`（ローカル Vite）
+- `https://ishii-portfolio.web.app`
+- `https://ishii-portfolio.firebaseapp.com`
+
+Cloud Run の旧フロント URL は当面残してよい。origin を足したら rails-api を再デプロイする。
+
+### デプロイ後の確認
+
+- `https://ishii-portfolio.web.app` で Home が表示される
+- `/about` 等を直接開いても SPA が 404 にならない
+- DevTools で API が `VITE_API_BASE_URL` 向けに呼ばれる
+- ログイン後 `access-token` / `client` / `uid` が localStorage に入る
+
+## 旧・参考：デプロイ（Cloud Run）
+
+以前は GitHub Actions が Docker イメージを Artifact Registry に push し、Cloud Run へ出していた。  
+Vite でビルドした静的ファイルを nginx が **8080** で配信する。現行の [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) は Firebase Hosting 向け。Dockerfile / nginx は当面残すが、ワークフローからは呼ばない。
 
 ### 事前準備（GCP）
 
