@@ -83,7 +83,9 @@ VITE_BASE_URL=/ \
 firebase deploy --only hosting --project ishii-portfolio
 ```
 
-CI（GitHub Actions）からの Hosting デプロイは、ワークフロー差し替え後に `main` への push で行う。Secret `FIREBASE_TOKEN` はリポジトリに置かず GitHub Secrets のみ。
+CI は `main` への push で [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) が動く（lint / knip → `npm run build` → `firebase deploy --only hosting`）。Secret `FIREBASE_TOKEN` はリポジトリに置かず GitHub Secrets のみ。
+
+現行ワークフローは `GCP_PROJECT_ID` / `GCP_SA_KEY` を使わない。残っていても無視される。旧 Cloud Run 用の値は下の「旧・参考」を見る。
 
 ### GitHub Secrets（react-rails リポジトリ）
 
@@ -114,8 +116,8 @@ Cloud Run の旧フロント URL は当面残してよい。origin を足した�
 
 ## 旧・参考：デプロイ（Cloud Run）
 
-以前は `main` への push で [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) が Cloud Run に出していた。  
-Vite でビルドした静的ファイルを nginx が **8080** で配信する。フロントの本番配信は Firebase Hosting へ移行する。Dockerfile / nginx は当面残す。
+以前は GitHub Actions が Docker イメージを Artifact Registry に push し、Cloud Run へ出していた。  
+Vite でビルドした静的ファイルを nginx が **8080** で配信する。現行の [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) は Firebase Hosting 向け。Dockerfile / nginx は当面残すが、ワークフローからは呼ばない。
 
 ### 事前準備（GCP）
 
