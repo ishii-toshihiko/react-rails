@@ -51,4 +51,13 @@ body{
 .contact-address {
   border-color: white;
 }
+
+.contact-honeypot {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
 }
