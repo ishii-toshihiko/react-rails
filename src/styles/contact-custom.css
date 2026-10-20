@@ -60,4 +60,33 @@ body{
   height: 1px;
   overflow: hidden;
 }
+
+.contact-preview {
+  margin: 0 10px 10px 10px;
+  padding: 12px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.contact-preview-title {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.contact-preview-note {
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+}
+
+.contact-preview-line {
+  margin-bottom: 4px;
+  font-size: 0.95rem;
+}
+
+.contact-preview-message {
+  margin: 0;
+  font-family: inherit;
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
 }
