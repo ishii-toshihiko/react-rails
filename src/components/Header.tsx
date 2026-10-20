@@ -46,21 +46,23 @@ const Header = ({loggedIn}:HeaderProps)=>{
   const isMobile = useMediaQuery('(max-width:600px)');
 
   const titleBlock = (
-    <Box className={'header responsive-box'} sx={{ position: 'relative' }}>
-      <Typography variant="h6" component="div" sx={{ flexGrow: 2,fontWeight: 900, }}>
-        Works I.T
-      </Typography>
-      <Typography variant="h5" component="div" sx={{ flexGrow: 2 }}>
-        Ishii&apos;s Portfolio
-      </Typography>
+    <Box sx={{ position: 'relative', width: '100%' }}>
+      <Box className={'header responsive-box'}>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 2,fontWeight: 900, }}>
+          Works I.T
+        </Typography>
+        <Typography variant="h5" component="div" sx={{ flexGrow: 2 }}>
+          Ishii&apos;s Portfolio
+        </Typography>
+      </Box>
       {isHome && viewCount !== null && (
         <Typography
           component="span"
           aria-label={`アクセス数 ${viewCount}`}
           sx={{
             position: 'absolute',
-            right: 8,
-            bottom: 4,
+            right: { xs: 8, sm: 12, md: 16 },
+            bottom: 6,
             fontSize: '0.7rem',
             fontWeight: 400,
             fontStyle: 'normal',
@@ -70,6 +72,7 @@ const Header = ({loggedIn}:HeaderProps)=>{
             lineHeight: 1,
             pointerEvents: 'none',
             userSelect: 'none',
+            whiteSpace: 'nowrap',
           }}
         >
           {viewCount.toLocaleString('ja-JP')} views
