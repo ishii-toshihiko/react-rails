@@ -63,4 +63,4 @@ jobs:
       - name: Deploy to Firebase Hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        run: firebase deploy --only hosting --project ishii-portfolio --non-interactive
+        run: firebase deploy --only hosting --non-interactive

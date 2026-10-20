@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "ishii-portfolio"
-  }
+    "default": "ishii-portfolio-front"
+  },
+  "targets": {},
+  "etags": {}
 }
