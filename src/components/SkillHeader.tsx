@@ -4,14 +4,15 @@ const SkillHeader = ({ open }: { open: boolean }) => (
   <Fade in={open} timeout={600}>
     <Slide direction="left" in={open} timeout={600}>
       <Card className='table-container-size skill-card-base'>
-          <CardContent>
+          <CardContent sx={{ pb: '8px !important' }}>
             <Box className='experience-title'>
-              活かせる経験・知識・技術
+              Web がメイン、回路・FPGA も対応
+            </Box>
+            <Box className='experience-catch'>
+              Web（Rails / React）を中心にしつつ、回路設計や FPGA も現場で扱ってきたエンジニアです。
             </Box>
             <Box className='experience-body'>
-              <p>・Ruby On Rails のプログラミング</p>
-              <p>・新規Web サイト構築の経験</p>
-              <p>・デジタル/アナログ回路設計とレビュー</p>
+              <p>下の表は経験年数の目安です。カテゴリごとに年数が長い順に並べています。</p>
             </Box>
           </CardContent>
       </Card>

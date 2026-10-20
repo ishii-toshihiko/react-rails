@@ -69,33 +69,39 @@ body{                             /*global(main.tsx)で読み込む時はbody{}�
     }
   }
 
-  /* Rating用のフォントサイズ */
-  .rating-size {
-    position: relative;
-    left: -15px;
-    font-size: 0.9rem;
+  /* スキル表の項目列: 枠内に収め、スマホでは可能な限り1行 */
+  .skill-item-cell {
+    border: 1px solid lightgray;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 0; /* table-layout: fixed で列幅を守る */
   }
 
   @media (min-width: 600px) {
-    .rating-size {
-      font-size: 1.2rem;
-    }
-  }
-  @media (min-width: 900px) {
-    .rating-size {
-      font-size: 1.5rem;
-    }
-  }
-  @media (min-width: 1200px) {
-    .rating-size {
-      font-size: 2.2rem;
-    }
-  }
-  @media (min-width: 1536px) {
-    .rating-size {
-      font-size: 2.6rem;
+    .skill-item-cell {
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
   }
 
-  
+  .skill-bar {
+    width: 100%;
+    max-width: 100%;
+    padding-right: 8px;
+  }
+
+  .skill-bar-progress {
+    height: 20px;
+    border-radius: 4px;
+  }
+
+  @media (min-width: 900px) {
+    .skill-bar-progress {
+      height: 24px;
+    }
+  }
 }

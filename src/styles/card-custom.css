@@ -36,29 +36,53 @@ body{
   }
 }
 
-/* 内容ボックス */
+.experience-catch {
+  margin-top: 12px;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+@media (min-width: 600px) {
+  .experience-catch {
+    font-size: 1.15rem;
+  }
+}
+@media (min-width: 900px) {
+  .experience-catch {
+    font-size: 1.25rem;
+  }
+}
+@media (min-width: 1200px) {
+  .experience-catch {
+    font-size: 1.45rem;
+  }
+}
+
+/* 内容ボックス（キャッチより少し小さく） */
 .experience-body {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.experience-body p {
+  margin: 0;
 }
 
 @media (min-width: 600px) {
   .experience-body {
-    font-size: 1.2rem;
+    font-size: 1.05rem;
   }
 }
 @media (min-width: 900px) {
   .experience-body {
-    font-size: 1.3rem;
+    font-size: 1.15rem;
   }
 }
 @media (min-width: 1200px) {
   .experience-body {
-    font-size: 1.6rem;
-  }
-}
-@media (min-width: 1536px) {
-  .experience-body {
-    font-size: 2.0rem;
+    font-size: 1.3rem;
   }
 }
 
