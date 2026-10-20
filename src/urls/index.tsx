@@ -18,3 +18,4 @@ axios.interceptors.request.use((config) => {
 const DEFAULT_API_LOCALHOST: string = import.meta.env.VITE_API_BASE_URL;
 export const loginIndex: string = `${DEFAULT_API_LOCALHOST}/auth/sign_in`;
 export const logoutIndex: string = `${DEFAULT_API_LOCALHOST}/auth/sign_out`;
+export const pageViewsIndex: string = `${DEFAULT_API_LOCALHOST}/page_views`;
