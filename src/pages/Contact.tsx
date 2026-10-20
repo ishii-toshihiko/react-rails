@@ -2,9 +2,21 @@ import { ListItem, ListItemText, Divider, ListItemIcon } from "@mui/material"
 import CallIcon from '@mui/icons-material/Call'
 import BusinessIcon from '@mui/icons-material/Business'
 import EmailIcon from '@mui/icons-material/Email'
-import { useState, type ChangeEvent, type FormEvent } from 'react'
+import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react'
 import { TextField, Button, Box, Typography } from '@mui/material'
 import { sendContact } from '../apis/sendContact'
+
+const isAuthenticated = (): boolean => {
+  const accessToken = localStorage.getItem('access-token')
+  const client = localStorage.getItem('client')
+  const uid = localStorage.getItem('uid')
+  return Boolean(accessToken && client && uid)
+}
+
+const previewValue = (value: string): string => {
+  const trimmed = value.trim()
+  return trimmed.length > 0 ? trimmed : '（未入力）'
+}
 
 const contactDetails = [
   {
@@ -32,6 +44,11 @@ const Contact = () => {
   })
   const [submitting, setSubmitting] = useState(false)
   const [status, setStatus] = useState<FormStatus>('idle')
+  const [loggedIn, setLoggedIn] = useState(false)
+
+  useEffect(() => {
+    setLoggedIn(isAuthenticated())
+  }, [])
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -142,6 +159,29 @@ const Contact = () => {
             onChange={handleChange}
           />
         </div>
+
+        {loggedIn && (
+          <Box className="contact-preview" aria-live="polite">
+            <Typography className="contact-preview-title" component="h2">
+              【送信されるメール（プレビュー）】
+            </Typography>
+            <Typography className="contact-preview-note">
+              この内容は、送信すると担当者宛のメールとして届きます。
+            </Typography>
+            <Typography className="contact-preview-line">
+              お名前: {previewValue(formData.name)}
+            </Typography>
+            <Typography className="contact-preview-line">
+              返信先: {previewValue(formData.email)}
+            </Typography>
+            <Typography className="contact-preview-line">
+              お問合せ内容:
+            </Typography>
+            <Typography className="contact-preview-message" component="pre">
+              {previewValue(formData.message)}
+            </Typography>
+          </Box>
+        )}
 
         <div className="contact-field">
           <Button
