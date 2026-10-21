@@ -24,7 +24,7 @@ const Works=()=>{
         職務経歴
       </Button>
         <p className='table-cell-std works-note'>
-          ※詳細は職務経歴書をご参照ください
+          ※職務年表に担当・技術の概要を併記（詳細は職務経歴書へ）
         </p>
       </div>
      </Box>
@@ -34,10 +34,30 @@ const Works=()=>{
           <Table className='table-base'>
             <TableHead >
               <TableRow sx={{ backgroundColor: 'lightgray' }}>
-                <TableCell className='table-cell-theme' sx={{width:'28%'}}>西暦</TableCell>
-                <TableCell className='table-cell-theme' sx={{width:'13%'}}>期間</TableCell>
-                <TableCell className='table-cell-theme' sx={{width:'28%'}}>社名</TableCell>
-                <TableCell className='table-cell-theme' sx={{width:'31%',}}>内容</TableCell>
+                <TableCell
+                  className="table-cell-theme"
+                  sx={{ width: { xs: '34%', sm: '28%' } }}
+                >
+                  西暦
+                </TableCell>
+                <TableCell
+                  className="table-cell-theme"
+                  sx={{ width: { xs: '12%', sm: '13%' } }}
+                >
+                  期間
+                </TableCell>
+                <TableCell
+                  className="table-cell-theme"
+                  sx={{ width: { xs: '26%', sm: '28%' } }}
+                >
+                  社名
+                </TableCell>
+                <TableCell
+                  className="table-cell-theme"
+                  sx={{ width: { xs: '28%', sm: '31%' } }}
+                >
+                  内容
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -54,7 +74,8 @@ const Works=()=>{
                       {row.name}
                     </TableCell>
                     <TableCell align="left" className='table-cell-std'>
-                      {row.note}
+                      <div>{row.note}</div>
+                      <div className="works-summary">{row.summary}</div>
                     </TableCell>
                   </TableRow>
                 )

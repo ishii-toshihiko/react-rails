@@ -6,15 +6,15 @@ import {
   Pool as PoolIcon,
   Colorize as ColorizeIcon,
 } from '@mui/icons-material'
-import Introduction from '../components/Introduction';
 import Resume from '../components/Resume';
+import FitOverview from '../components/FitOverview';
 
 
 const About =()=>{
   return(
     <>
     <Divider/>
-    <Introduction/>
+    <FitOverview/>
     <Resume/>
     <List
       sx={{

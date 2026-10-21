@@ -1,9 +1,7 @@
-import { ListItem, ListItemText, Divider, ListItemIcon } from "@mui/material"
-import CallIcon from '@mui/icons-material/Call'
-import BusinessIcon from '@mui/icons-material/Business'
-import EmailIcon from '@mui/icons-material/Email'
+import { Divider } from '@mui/material'
 import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react'
-import { TextField, Button, Box, Typography } from '@mui/material'
+import { TextField, Button, Box, Typography, Chip } from '@mui/material'
+import MarkEmailReadOutlinedIcon from '@mui/icons-material/MarkEmailReadOutlined'
 import { sendContact } from '../apis/sendContact'
 
 const isAuthenticated = (): boolean => {
@@ -17,21 +15,6 @@ const previewValue = (value: string): string => {
   const trimmed = value.trim()
   return trimmed.length > 0 ? trimmed : '（未入力）'
 }
-
-const contactDetails = [
-  {
-    icon: <BusinessIcon style={{ color: 'green' }} />,
-    text: '住所： 〒000-0000 架空県架空市架空町00-0-800',
-  },
-  {
-    icon: <CallIcon style={{ color: 'orange' }} />,
-    text: '電話番号： 090-0000-0000',
-  },
-  {
-    icon: <EmailIcon style={{ color: 'blue' }} />,
-    text: 'Eメール： dummy@example.com',
-  },
-]
 
 type FormStatus = 'idle' | 'success' | 'validation' | 'rate_limit' | 'failed'
 
@@ -81,7 +64,7 @@ const Contact = () => {
   const statusMessage = (() => {
     switch (status) {
       case 'success':
-        return '送信しました。ご連絡ありがとうございます。'
+        return '送信しました。案件のご相談も歓迎です。内容を確認のうえ、ご連絡いたします。'
       case 'validation':
         return '入力内容を確認してください。'
       case 'rate_limit':
@@ -162,23 +145,53 @@ const Contact = () => {
 
         {loggedIn && (
           <Box className="contact-preview" aria-live="polite">
-            <Typography className="contact-preview-title" component="h2">
-              【送信されるメール（プレビュー）】
-            </Typography>
+            <Box className="contact-preview-heading">
+              <Chip
+                size="small"
+                color="primary"
+                variant="outlined"
+                icon={<MarkEmailReadOutlinedIcon />}
+                label="プレビュー"
+              />
+              <Typography className="contact-preview-title" component="h2">
+                送信内容のプレビュー
+              </Typography>
+            </Box>
             <Typography className="contact-preview-note">
-              この内容は、送信すると担当者宛のメールとして届きます。
+              下の内容が、そのまま担当者宛メールになります（まだ送信されていません）。
             </Typography>
-            <Typography className="contact-preview-line">
-              お名前: {previewValue(formData.name)}
-            </Typography>
-            <Typography className="contact-preview-line">
-              返信先: {previewValue(formData.email)}
-            </Typography>
-            <Typography className="contact-preview-line">
-              お問合せ内容:
-            </Typography>
-            <Typography className="contact-preview-message" component="pre">
-              {previewValue(formData.message)}
+
+            <Box className="contact-preview-mail" role="region" aria-label="メールプレビュー">
+              <Box className="contact-preview-headers">
+                <Typography className="contact-preview-header-row" component="div">
+                  <span className="contact-preview-label">件名</span>
+                  <span className="contact-preview-value">
+                    Portfolio contact from {previewValue(formData.name)}
+                  </span>
+                </Typography>
+                <Typography className="contact-preview-header-row" component="div">
+                  <span className="contact-preview-label">From</span>
+                  <span className="contact-preview-value">サイト通知用アドレス</span>
+                </Typography>
+                <Typography className="contact-preview-header-row" component="div">
+                  <span className="contact-preview-label">To</span>
+                  <span className="contact-preview-value">担当者宛（設定アドレス）</span>
+                </Typography>
+                <Typography className="contact-preview-header-row" component="div">
+                  <span className="contact-preview-label">Reply-To</span>
+                  <span className="contact-preview-value">{previewValue(formData.email)}</span>
+                </Typography>
+              </Box>
+              <Typography className="contact-preview-message" component="pre">
+                {`Name: ${previewValue(formData.name)}
+Email: ${previewValue(formData.email)}
+
+Message:
+${previewValue(formData.message)}`}
+              </Typography>
+            </Box>
+            <Typography className="contact-preview-footer">
+              ↑ この内容で送信されます
             </Typography>
           </Box>
         )}
@@ -210,24 +223,21 @@ const Contact = () => {
       </Box>
 
       <Divider />
-      <Box className="table-container-size">
-        <div className="contact-logo">
-          Works I.T
-        </div>
-        <span className="table-cell-std contact-address">
-          （※ 以下はセキュリティ保護のため架空情報です）
-        </span>
-
-        {contactDetails.map((detail, index) => (
-          <ListItem key={index}>
-            <ListItemIcon>{detail.icon}</ListItemIcon>
-            <ListItemText>
-              <span className="table-cell-std contact-address">
-                {detail.text}
-              </span>
-            </ListItemText>
-          </ListItem>
-        ))}
+      <Box className="table-container-size contact-company">
+        <Box className="contact-company-heading">
+          <Typography className="contact-logo" component="div">
+            Works I.T
+          </Typography>
+          <Chip size="small" label="架空情報" variant="outlined" />
+        </Box>
+        <Typography className="contact-company-line">
+          〒000-0000 架空県架空市架空町00-0-800
+        </Typography>
+        <Typography className="contact-company-line">
+          Tel 090-0000-0000
+          <span className="contact-company-sep"> / </span>
+          dummy@example.com
+        </Typography>
       </Box>
       <Divider />
     </>

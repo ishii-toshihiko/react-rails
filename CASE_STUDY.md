@@ -55,6 +55,17 @@ Browser (Firebase Hosting)
 - フロント: [github.com/ishii-toshihiko/react-rails](https://github.com/ishii-toshihiko/react-rails)
 - API: [github.com/ishii-toshihiko/rails-api](https://github.com/ishii-toshihiko/rails-api)
 
+### 主要画面（デモでの見方）
+
+| 画面 | 内容 |
+|------|------|
+| Home (`/`) | トップ。アクセス数表示・ログイン導線 |
+| About (`/about`) | プロフィール、できること／案件の向き不向き、経歴・資格 |
+| Skills (`/skills`) | ソフト／ハードの経験年数（バー表示） |
+| Works (`/works`) | 職務年表＋各行の担当・技術概要 |
+| Contact (`/contact`) | お問合せ（API 経由でメール送信） |
+| ログイン (`/v1/auth`) | トークン認証（管理・プレビュー用） |
+
 ## 6. 工夫
 
 - お問合せはフロントから Resend を直接叩かず、API 経由（キー非公開）

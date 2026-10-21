@@ -65,9 +65,12 @@ const SkillTable = () => {
 
     return orderedKeys.map((category) => {
       const meta = categoryMeta(category)
-      const items = [...(byCategory.get(category) ?? [])].sort(
-        (a, b) => b.term - a.term || a.item.localeCompare(b.item, 'ja')
-      )
+      const items = [...(byCategory.get(category) ?? [])].sort((a, b) => {
+        // Ruby をソフトカテゴリの先頭に固定（同率年数でも上に出す）
+        if (a.item === 'Ruby' && b.item !== 'Ruby') return -1
+        if (b.item === 'Ruby' && a.item !== 'Ruby') return 1
+        return b.term - a.term || a.item.localeCompare(b.item, 'ja')
+      })
       return {
         category,
         label: meta.label,
