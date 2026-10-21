@@ -44,7 +44,7 @@ const Works=()=>{
               {rows.map((row) => {
                 return (
                   <TableRow key={row.no}>
-                    <TableCell align="center" className="table-cell-std works-date-cell">
+                    <TableCell align="left" className="table-cell-std works-date-cell">
                       {row.date}
                     </TableCell>
                     <TableCell align="right" className='table-cell-std'>
