@@ -29,8 +29,6 @@ const Home =()=>{
         navigation
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
-        onSwiper={(swiper) => console.log(swiper)}
-        onSlideChange={() => console.log('slide change')}
         autoplay={{
           delay: 3000,                  // 3秒ごとにスライド
           disableOnInteraction: false,  // ユーザー操作後も自動再開

@@ -11,7 +11,6 @@ const SignIn: React.FC = () => {
         e.preventDefault()      // 👈これでReact 側でフォーム送信を完全に止める
         const params = { email, password }
         const success = await verifyUserData(params)
-        console.log(success)
         if (success) {
             navigate('/')
         }
