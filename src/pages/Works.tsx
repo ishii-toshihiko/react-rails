@@ -30,7 +30,7 @@ const Works=()=>{
      </Box>
 
       <div>
-        <TableContainer  className='table-container-size'>
+        <TableContainer className="table-container-size works-table-container">
           <Table className='table-base'>
             <TableHead >
               <TableRow sx={{ backgroundColor: 'lightgray' }}>
@@ -44,10 +44,10 @@ const Works=()=>{
               {rows.map((row) => {
                 return (
                   <TableRow key={row.no}>
-                    <TableCell align="center" className='table-cell-std'>
+                    <TableCell align="center" className="table-cell-std works-date-cell">
                       {row.date}
                     </TableCell>
-                    <TableCell align="center" className='table-cell-std'>
+                    <TableCell align="right" className='table-cell-std'>
                         {row.period}
                     </TableCell>
                     <TableCell align="left" className='table-cell-std'>
