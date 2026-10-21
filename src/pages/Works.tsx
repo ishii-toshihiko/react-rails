@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { useState } from 'react'
 import { workRows } from '../data/rows'
+import { worksAccent } from '../data/navItems'
 
 const Works=()=>{
   const [rows] = useState(workRows)
@@ -20,7 +21,17 @@ const Works=()=>{
      <Divider/>
      <Box className='table-container-size'>
       <div className='works-header'>
-      <Button className='works-button'>
+      <Button
+        className="works-button works-title-button"
+        size="small"
+        disableElevation
+        sx={{
+          bgcolor: worksAccent,
+          '&:hover': { bgcolor: '#0d47a1' },
+          whiteSpace: 'nowrap',
+          flexShrink: 0,
+        }}
+      >
         職務経歴
       </Button>
         <p className='table-cell-std works-note'>

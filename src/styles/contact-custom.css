@@ -2,9 +2,15 @@ body{
 
 .contact-button {
   color: white;
-  background-color: gray;
+  background-color: #455a64;
   position: relative;
-  left: 5px;;
+  left: 5px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: none;
+  padding: 4px 12px;
+  line-height: 1.4;
+  border-radius: 6px;
 }
 
 .contact-theme {
@@ -31,12 +37,14 @@ body{
 
 .contact-company {
   padding: 12px 10px 16px 10px;
+  text-align: center;
 }
 
 .contact-company-heading {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   margin-bottom: 6px;
 }
@@ -44,7 +52,7 @@ body{
 .contact-logo {
   font-style: italic;
   font-size: 1.2rem;
-  text-align: left;
+  text-align: center;
   font-weight: bold;
   margin: 0;
   @media (min-width: 900px) {
@@ -61,6 +69,7 @@ body{
   line-height: 1.5;
   color: rgba(0, 0, 0, 0.75);
   word-break: break-word;
+  text-align: center;
 }
 
 .contact-company-sep {
@@ -79,9 +88,9 @@ body{
 .contact-preview {
   margin: 0 10px 10px 10px;
   padding: 12px;
-  border: 1px dashed rgba(25, 118, 210, 0.45);
+  border: 1px dashed rgba(69, 90, 100, 0.5);
   border-radius: 8px;
-  background-color: rgba(25, 118, 210, 0.04);
+  background-color: rgba(69, 90, 100, 0.06);
 }
 
 .contact-preview-heading {

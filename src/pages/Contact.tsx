@@ -3,6 +3,7 @@ import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react'
 import { TextField, Button, Box, Typography, Chip } from '@mui/material'
 import MarkEmailReadOutlinedIcon from '@mui/icons-material/MarkEmailReadOutlined'
 import { sendContact } from '../apis/sendContact'
+import { contactAccent } from '../data/navItems'
 
 const isAuthenticated = (): boolean => {
   const accessToken = localStorage.getItem('access-token')
@@ -84,7 +85,12 @@ const Contact = () => {
         component="form"
         onSubmit={handleSubmit}
       >
-        <Button className="works-button contact-button">
+        <Button
+          className="contact-button"
+          size="small"
+          disableElevation
+          sx={{ bgcolor: contactAccent, '&:hover': { bgcolor: '#37474f' } }}
+        >
           お問い合わせ
         </Button>
         <br />
@@ -148,10 +154,14 @@ const Contact = () => {
             <Box className="contact-preview-heading">
               <Chip
                 size="small"
-                color="primary"
                 variant="outlined"
                 icon={<MarkEmailReadOutlinedIcon />}
                 label="プレビュー"
+                sx={{
+                  color: contactAccent,
+                  borderColor: contactAccent,
+                  '& .MuiChip-icon': { color: contactAccent },
+                }}
               />
               <Typography className="contact-preview-title" component="h2">
                 送信内容のプレビュー

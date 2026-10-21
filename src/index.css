@@ -68,32 +68,11 @@ button:hover {
     justify-content: center;
 }
 
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3.0rem;
-    margin: 1px;
-    background-color: 'white';
-    font-weight: bold;
-    font-style: italic;
-    height: 70px;
-}
-.header-title{
-    font-size: 4rem;
-    text-shadow: 4px 4px 4px lightgray;
-}
-.header-subtitle{
-    font-family:  'Yuji Syuku', serif;
-    font-size: 1rem;
-    margin:10px 0px 0px 20px;
-}
-
 .responsive-box {
     font-family: 'Montserrat', sans-serif;
     width: 100%;
-    padding: 8px;         /* p: 1 → 1 * 8px = 16px */
-    margin-left: auto;     /* mx: 'auto' → 左右中央寄せ */
+    padding: 8px;
+    margin-left: auto;
     margin-right: auto;
 }
 @media (min-width: 600px) {
@@ -105,10 +84,4 @@ button:hover {
     .responsive-box {
         width: 60%;
     }
-}
-
-.menu-button {
-    margin: 5px;
-    font-size: 0.7rem;
-    color: white;
 }
