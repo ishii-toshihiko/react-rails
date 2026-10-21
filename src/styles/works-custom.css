@@ -17,6 +17,14 @@ body{
   border-color: white;
 }
 
+.works-table-container {
+  overflow-x: auto;
+}
+
+.works-date-cell {
+  white-space: nowrap;
+}
+
 @media (min-width: 600px) {
   .works-button {
     font-size: 1.2rem;
