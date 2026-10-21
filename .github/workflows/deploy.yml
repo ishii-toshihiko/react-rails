@@ -1,14 +1,16 @@
-# main ブランチへの push 時に Firebase Hosting へデプロイする
-# 流れ: lint/knip → npm ci → Vite build（API URL 埋込）→ firebase deploy --only hosting
+# main への push で Firebase Hosting へデプロイする。
+# pull request では quality（lint / knip / Playwright スモーク）だけ実行する。
+# 流れ: lint/knip/smoke → npm ci → Vite build（API URL 埋込）→ firebase deploy --only hosting
 name: Deploy to Firebase Hosting
 
 on:
   push:
     branches:
       - main
+  pull_request:
 
 jobs:
-  # --- lint / knip（デプロイ前ゲート） ---
+  # --- lint / knip / smoke（デプロイ前ゲート） ---
   quality:
     runs-on: ubuntu-latest
 
@@ -31,7 +33,14 @@ jobs:
       - name: Run knip
         run: npm run knip
 
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright smoke tests
+        run: npm run test:e2e
+
   build-and-deploy:
+    if: github.event_name == 'push'
     needs: quality
     runs-on: ubuntu-latest
 
