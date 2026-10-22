@@ -6,6 +6,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { signOutUser } from '../apis/userSignOut'
 import { recordPageView } from '../apis/recordPageView'
 import { useEffect, useState } from 'react'
+import brandMark from '../assets/logo/works-it-mark-pc-person-laptop.svg'
 
 type HeaderProps = {
   loggedIn: boolean
@@ -71,21 +72,34 @@ const Header = ({ loggedIn }: HeaderProps) => {
         }}
       >
         <Box sx={{ flex: 1, minWidth: 0 }}>
-          <Typography
-            component="div"
-            sx={{
-              m: 0,
-              fontWeight: 900,
-              fontStyle: 'italic',
-              fontSize: { xs: '1.85rem', sm: '2.35rem', md: '2.6rem' },
-              letterSpacing: '0.06em',
-              lineHeight: 1.05,
-              color: '#000',
-              textShadow: '1px 2px 4px rgba(0, 0, 0, 0.18), 0 1px 2px rgba(0, 0, 0, 0.1)',
-            }}
-          >
-            Works I.T
-          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, sm: 1.25 } }}>
+            <Box
+              component="img"
+              src={brandMark}
+              alt=""
+              sx={{
+                width: { xs: 40, sm: 48, md: 52 },
+                height: { xs: 40, sm: 48, md: 52 },
+                borderRadius: 1.5,
+                flexShrink: 0,
+              }}
+            />
+            <Typography
+              component="div"
+              sx={{
+                m: 0,
+                fontWeight: 900,
+                fontStyle: 'italic',
+                fontSize: { xs: '1.85rem', sm: '2.35rem', md: '2.6rem' },
+                letterSpacing: '0.06em',
+                lineHeight: 1.05,
+                color: '#000',
+                textShadow: '1px 2px 4px rgba(0, 0, 0, 0.18), 0 1px 2px rgba(0, 0, 0, 0.1)',
+              }}
+            >
+              Works I.T
+            </Typography>
+          </Box>
           <Typography
             component="div"
             sx={{
@@ -98,7 +112,7 @@ const Header = ({ loggedIn }: HeaderProps) => {
               letterSpacing: '0.05em',
             }}
           >
-            Ishii&apos;s Portfolio
+            Ishii Toshihiko&apos;s Portfolio
           </Typography>
         </Box>
 

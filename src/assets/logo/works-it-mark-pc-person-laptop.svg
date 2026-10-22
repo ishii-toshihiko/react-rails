@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Works I.T person with laptop">
+  <rect width="64" height="64" rx="14" fill="#1565c0"/>
+  <g transform="rotate(10 32 32) translate(32 32) scale(1.15) translate(-32 -32)">
+    <!-- person as letter i (no forked feet) -->
+    <circle cx="18" cy="19.62" r="5.5" fill="#ffffff"/>
+    <rect x="13.5" y="26.6" width="9" height="29.75" rx="4.5" fill="#ffffff"/>
+    <!-- PC: screen + keyboard -->
+    <rect x="28" y="12" width="24" height="30.5" rx="2.5" fill="#ffffff"/>
+    <!-- keyboard: same corner radius as display (rx=2.5); bottom tilted 10° -->
+    <path
+      d="M30.5 44.5
+         H49.5
+         Q52 44.5 52 47
+         L52 47.5
+         Q52 50 49.55 50.43
+         L30.82 53.74
+         Q28.37 54.17 28.15 51.7
+         L28 47
+         Q28 44.5 30.5 44.5
+         Z"
+      fill="#ffffff"
+    />
+    <!-- T on screen -->
+    <rect x="31" y="16.5" width="18" height="6.5" rx="0.9" fill="#1565c0"/>
+    <rect x="36.25" y="19.75" width="7.5" height="19.5" rx="0.8" fill="#1565c0"/>
+  </g>
+</svg>
