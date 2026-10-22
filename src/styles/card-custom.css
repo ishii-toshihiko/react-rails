@@ -60,10 +60,13 @@ body{
   }
 }
 
-/* 内容ボックス（キャッチより少し小さく） */
+/* 注釈（キャッチより小さく・控えめ・キャッチから段下げ） */
 .experience-body {
-  font-size: 0.85rem;
-  line-height: 1.5;
+  margin-left: 1em;
+  padding-left: 0.25em;
+  font-size: 0.68rem;
+  line-height: 1.45;
+  color: rgba(0, 0, 0, 0.62);
 }
 
 .experience-body p {
@@ -72,17 +75,17 @@ body{
 
 @media (min-width: 600px) {
   .experience-body {
-    font-size: 1.05rem;
+    font-size: 0.78rem;
   }
 }
 @media (min-width: 900px) {
   .experience-body {
-    font-size: 1.15rem;
+    font-size: 0.85rem;
   }
 }
 @media (min-width: 1200px) {
   .experience-body {
-    font-size: 1.3rem;
+    font-size: 0.95rem;
   }
 }
 

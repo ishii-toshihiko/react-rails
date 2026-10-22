@@ -2,7 +2,8 @@
 
 個人ポートフォリオの **フロントエンド** です。作品・スキル・お問合せなどを表示し、API（rails-api）と連携します。
 
-**案件向けの読み物:** [CASE_STUDY.md](./CASE_STUDY.md)
+**案件向けの読み物:** [CASE_STUDY.md](./CASE_STUDY.md)  
+**運用メモ:** [docs/運用メモ.md](./docs/運用メモ.md)
 
 | 項目 | 内容 |
 |------|------|
@@ -10,7 +11,8 @@
 | API | [rails-api](https://github.com/ishii-toshihiko/rails-api)（Cloud Run） |
 | 配信 | Firebase Hosting（SPA） |
 | 担当範囲 | UI・画面遷移・認証トークン保持・API 呼び出し・Hosting デプロイ |
-| お問合せ | デモの [Contact](https://ishii-portfolio-front.web.app/contact) から |
+| 想定規模 | 小〜中規模の Rails API + React（認証・フォーム・メール・簡単な計測を含む Web） |
+| お問合せ | デモの [Contact](https://ishii-portfolio-front.web.app/contact) から（実メールは非公開） |
 
 ## 技術スタック
 
@@ -26,7 +28,7 @@
 | 画面 | 内容 |
 |------|------|
 | Home | トップ、アクセスカウンタ、ログイン導線 |
-| About | プロフィール、できること／案件の向き不向き |
+| About | プロフィール、できること／案件の向き不向き、連絡導線 |
 | Skills | 経験年数バー（ソフト／ハード） |
 | Works | 職務年表＋担当・技術の概要 |
 | Contact | お問合せ（案件相談歓迎）。API 経由でメール送信 |
@@ -45,13 +47,16 @@ Firebase Hosting (このリポジトリの dist)
 
 ## 品質ゲート（CI）
 
-`main` への push で deploy 前に次を実行します。
+`main` への push で **deploy 前**に次を実行します（壊れたまま Hosting に載せないため）。
 
 - ESLint / knip
-- **Playwright スモーク**（`npm run test:e2e` ← `e2e/smoke.spec.ts`）
+- **Playwright**（`npm run test:e2e` ← `e2e/smoke.spec.ts` ＋ `e2e/skills-admin.spec.ts`）
   - 公開ページ表示
   - お問合せフォーム表示
   - ログイン状態でのメニュー遷移
+  - スキル管理の未ログイン拒否・下書き編集
+
+詳細な切り分け手順は [docs/運用メモ.md](./docs/運用メモ.md)、案件向けの運用要約は [CASE_STUDY.md の運用節](./CASE_STUDY.md#8-運用) を参照。
 
 ## 担当・ポイント
 

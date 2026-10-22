@@ -44,23 +44,13 @@ body{
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 8px;
   margin-bottom: 6px;
 }
 
 .contact-logo {
-  font-style: italic;
-  font-size: 1.2rem;
-  text-align: center;
-  font-weight: bold;
-  margin: 0;
-  @media (min-width: 900px) {
-    font-size: 1.5rem;
-  }
-  @media (min-width: 1200px) {
-    font-size: 1.8rem;
-  }
+  text-align: left;
 }
 
 .contact-company-line {
@@ -69,7 +59,7 @@ body{
   line-height: 1.5;
   color: rgba(0, 0, 0, 0.75);
   word-break: break-word;
-  text-align: center;
+  text-align: left;
 }
 
 .contact-company-sep {

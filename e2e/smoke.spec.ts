@@ -3,7 +3,7 @@ import { expect, test, type Page } from '@playwright/test'
 const pages = [
   { path: '/', text: "Ishii Toshihiko's Portfolio" },
   { path: '/about', text: 'できること・案件の向き不向き' },
-  { path: '/skills', text: 'Web がメイン、回路・FPGA も対応' },
+  { path: '/skills', text: 'Web がメイン ｜ 回路・FPGA も対応' },
   { path: '/works', text: '職務経歴' },
   { path: '/contact', text: 'お問い合わせ' },
   { path: '/v1/auth', text: 'ログインページ' },

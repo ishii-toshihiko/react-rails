@@ -5,6 +5,7 @@ import MarkEmailReadOutlinedIcon from '@mui/icons-material/MarkEmailReadOutlined
 import { sendContact } from '../apis/sendContact'
 import { contactAccent } from '../data/navItems'
 import { isAuthenticated } from '../lib/auth'
+import brandMark from '../assets/logo/works-it-mark-pc-person-laptop.svg'
 
 const previewValue = (value: string): string => {
   const trimmed = value.trim()
@@ -228,20 +229,65 @@ ${previewValue(formData.message)}`}
 
       <Divider />
       <Box className="table-container-size contact-company">
-        <Box className="contact-company-heading">
-          <Typography className="contact-logo" component="div">
-            Works I.T
-          </Typography>
-          <Chip size="small" label="架空情報" variant="outlined" />
+        <Box
+          sx={{
+            display: 'inline-flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            textAlign: 'left',
+            maxWidth: '100%',
+          }}
+        >
+          <Box className="contact-company-heading">
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Box
+                component="img"
+                src={brandMark}
+                alt=""
+                sx={{
+                  width: { xs: 28, md: 34, lg: 40 },
+                  height: { xs: 28, md: 34, lg: 40 },
+                  borderRadius: 1,
+                  flexShrink: 0,
+                }}
+              />
+              <Typography
+                className="contact-logo"
+                component="div"
+                sx={{
+                  m: 0,
+                  fontWeight: 900,
+                  fontStyle: 'italic',
+                  fontSize: { xs: '1.2rem', md: '1.5rem', lg: '1.8rem' },
+                  letterSpacing: '0.06em',
+                  lineHeight: 1.05,
+                  color: '#000',
+                  textShadow:
+                    '1px 2px 4px rgba(0, 0, 0, 0.18), 0 1px 2px rgba(0, 0, 0, 0.1)',
+                }}
+              >
+                Works I.T
+              </Typography>
+            </Box>
+            <Chip size="small" label="架空情報" variant="outlined" />
+          </Box>
+          <Box
+            sx={{
+              // ロゴ幅 + gap 分だけ段下げし、郵便番号と電話の開始位置を揃える
+              pl: { xs: 'calc(28px + 8px)', md: 'calc(34px + 8px)', lg: 'calc(40px + 8px)' },
+              width: '100%',
+            }}
+          >
+            <Typography className="contact-company-line">
+              〒000-0000 架空県架空市架空町00-0-800
+            </Typography>
+            <Typography className="contact-company-line">
+              Tel 090-0000-0000
+              <span className="contact-company-sep"> / </span>
+              dummy@example.com
+            </Typography>
+          </Box>
         </Box>
-        <Typography className="contact-company-line">
-          〒000-0000 架空県架空市架空町00-0-800
-        </Typography>
-        <Typography className="contact-company-line">
-          Tel 090-0000-0000
-          <span className="contact-company-sep"> / </span>
-          dummy@example.com
-        </Typography>
       </Box>
       <Divider />
     </>

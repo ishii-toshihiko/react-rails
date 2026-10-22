@@ -91,6 +91,48 @@ Browser (Firebase Hosting)
 - **Playwright**（`e2e/smoke.spec.ts`＋`e2e/skills-admin.spec.ts`）を CI の deploy 前に実行  
   （公開ページ・お問合せフォーム・メニュー遷移・スキル管理の権限境界）
 
+## 8. 運用
+
+発注者が気にする「連絡・障害・品質ゲート」を、本デモでの運用実態としてまとめます。  
+手順の詳細は [docs/運用メモ.md](./docs/運用メモ.md) を参照してください。
+
+### デプロイ
+
+| 対象 | 手段 |
+|------|------|
+| フロント | `main` push → GitHub Actions → lint / knip / Playwright → Firebase Hosting |
+| API | `main` push → GitHub Actions → RuboCop / RSpec → イメージ push → Cloud Run → `db:prepare` Job |
+
+### ログ・監視
+
+- API（Cloud Run）: **Cloud Logging** でリクエスト／アプリログを確認
+- フロント（Firebase Hosting）: Hosting の配信状況・デプロイ履歴を Console で確認
+- お問合せ失敗時: API ログと Resend 側の配信状況を突き合わせ（本文全文はログに出さない）
+
+外部の有料監視 SaaS は未導入です。小〜中規模デモでは上記で十分な切り分けができます。
+
+### 品質ゲート（CI）
+
+デプロイ前に自動実行しています。
+
+- **フロント:** ESLint → knip → Playwright（スモーク＋スキル管理の権限境界）→ ビルド／Hosting デプロイ
+- **API:** RuboCop → RSpec → イメージビルド／Cloud Run デプロイ
+
+「壊れたまま本番に載らない」ことを、営業・技術の両面で示すための仕組みです。
+
+### 障害時の切り分け（要約）
+
+1. デモ画面が出るか（Hosting / DNS）
+2. API の health（Cloud Run のリビジョン・ログ）
+3. お問合せだけ失敗するか（Resend・Secret・レート制限）
+4. スキル表示だけおかしいか（公開 `GET /v1/skills` と下書きの取り違え）
+
+詳細手順は運用メモに記載しています。
+
+### 連絡手段
+
+案件のご相談は、デモの **[Contact フォーム](https://ishii-portfolio-front.web.app/contact)** からお願いします（実メールアドレスはサイトに公開していません）。
+
 ## 向いている案件（目安）
 
 - Rails API + React の小〜中規模 Web

@@ -1,8 +1,11 @@
-import { Box, Divider, alpha } from '@mui/material'
+import { Box, Button, Divider, alpha } from '@mui/material'
+import { Link as RouterLink } from 'react-router-dom'
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
+import MailOutlineIcon from '@mui/icons-material/MailOutline'
 import type { ReactNode } from 'react'
+import { contactAccent } from '../data/navItems'
 
 const Heading = ({
   icon,
@@ -111,6 +114,38 @@ const FitOverview = () => (
         <li>ネイティブアプリ（iOS / Android）中心の開発</li>
         <li>ドメイン知識が主体で、実装がごく薄い案件のみ</li>
       </Box>
+    </Box>
+
+    <Box
+      sx={{
+        ...sectionPad,
+        borderLeft: 3,
+        borderColor: contactAccent,
+        bgcolor: alpha(contactAccent, 0.06),
+        borderRadius: 1,
+      }}
+    >
+      <Heading iconColor={contactAccent} icon={<MailOutlineIcon fontSize="small" />}>
+        想定規模とご連絡
+      </Heading>
+      <Box component="p" sx={{ m: 0, mb: 1.25, lineHeight: 1.6 }}>
+        想定は小〜中規模の Rails API + React です。案件のご相談はお問い合わせフォームからどうぞ（実メールはサイトに公開していません）。
+      </Box>
+      <Button
+        component={RouterLink}
+        to="/contact"
+        variant="contained"
+        size="small"
+        disableElevation
+        sx={{
+          textTransform: 'none',
+          fontWeight: 700,
+          bgcolor: contactAccent,
+          '&:hover': { bgcolor: contactAccent, filter: 'brightness(0.92)' },
+        }}
+      >
+        お問い合わせへ
+      </Button>
     </Box>
 
     <Divider />
