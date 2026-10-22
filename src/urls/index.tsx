@@ -21,3 +21,4 @@ export const logoutIndex: string = `${DEFAULT_API_LOCALHOST}/auth/sign_out`;
 export const pageViewsIndex: string = `${DEFAULT_API_LOCALHOST}/page_views`;
 export const contactsIndex: string = `${DEFAULT_API_LOCALHOST}/contacts`;
 export const skillsIndex: string = `${DEFAULT_API_LOCALHOST}/skills`;
+export const skillDraftsIndex: string = `${DEFAULT_API_LOCALHOST}/skill_drafts`;

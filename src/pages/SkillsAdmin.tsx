@@ -16,10 +16,12 @@ import {
 } from '@mui/material'
 import { useCallback, useEffect, useState, type FormEvent } from 'react'
 import {
-  createSkill,
-  deleteSkill,
-  fetchSkills,
-  updateSkill,
+  createSkillDraft,
+  deleteSkillDraft,
+  fetchSkillDrafts,
+  publishSkillDrafts,
+  resetSkillDrafts,
+  updateSkillDraft,
 } from '../apis/skills'
 import type { Skill, SkillCategory, SkillInput } from '../types/Skill'
 
@@ -36,49 +38,58 @@ const categoryLabel = (category: string): string => {
 }
 
 const SkillsAdmin = () => {
-  const [skills, setSkills] = useState<Skill[]>([])
+  const [drafts, setDrafts] = useState<Skill[]>([])
+  const [canPublish, setCanPublish] = useState(false)
   const [form, setForm] = useState<SkillInput>(emptyForm)
   const [editingId, setEditingId] = useState<number | null>(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [notice, setNotice] = useState<string | null>(null)
 
-  const loadSkills = useCallback(async () => {
+  const applyPayload = (payload: { drafts: Skill[]; can_publish: boolean }) => {
+    setDrafts(payload.drafts)
+    setCanPublish(payload.can_publish)
+  }
+
+  const loadDrafts = useCallback(async () => {
     setLoading(true)
     setError(null)
     try {
-      const data = await fetchSkills()
-      setSkills(data)
+      const data = await fetchSkillDrafts()
+      applyPayload(data)
     } catch {
-      setError('スキル一覧の取得に失敗しました。')
+      setError('下書き一覧の取得に失敗しました。')
     } finally {
       setLoading(false)
     }
   }, [])
 
   useEffect(() => {
-    void loadSkills()
-  }, [loadSkills])
+    void loadDrafts()
+  }, [loadDrafts])
 
   const resetForm = () => {
     setForm(emptyForm)
     setEditingId(null)
   }
 
-  const startEdit = (skill: Skill) => {
-    setEditingId(skill.id)
+  const startEdit = (draft: Skill) => {
+    setEditingId(draft.id)
     setForm({
-      category: (skill.category === 'heard' ? 'heard' : 'soft') as SkillCategory,
-      item: skill.item,
-      term: skill.term,
+      category: (draft.category === 'heard' ? 'heard' : 'soft') as SkillCategory,
+      item: draft.item,
+      term: draft.term,
     })
     setError(null)
+    setNotice(null)
   }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setSaving(true)
     setError(null)
+    setNotice(null)
 
     const payload: SkillInput = {
       category: form.category,
@@ -88,33 +99,71 @@ const SkillsAdmin = () => {
 
     try {
       if (editingId === null) {
-        await createSkill(payload)
+        await createSkillDraft(payload)
       } else {
-        await updateSkill(editingId, payload)
+        await updateSkillDraft(editingId, payload)
       }
       resetForm()
-      await loadSkills()
+      await loadDrafts()
+      setNotice('下書きを保存しました。公開ページにはまだ反映されていません。')
     } catch {
       setError(
         editingId === null
-          ? 'スキルの作成に失敗しました。入力内容を確認してください。'
-          : 'スキルの更新に失敗しました。入力内容を確認してください。'
+          ? '下書きの作成に失敗しました。入力内容を確認してください。'
+          : '下書きの更新に失敗しました。入力内容を確認してください。'
       )
     } finally {
       setSaving(false)
     }
   }
 
-  const handleDelete = async (skill: Skill) => {
-    if (!window.confirm(`「${skill.item}」を削除しますか？`)) return
+  const handleDelete = async (draft: Skill) => {
+    if (!window.confirm(`下書き「${draft.item}」を削除しますか？`)) return
 
     setError(null)
+    setNotice(null)
     try {
-      await deleteSkill(skill.id)
-      if (editingId === skill.id) resetForm()
-      await loadSkills()
+      await deleteSkillDraft(draft.id)
+      if (editingId === draft.id) resetForm()
+      await loadDrafts()
     } catch {
-      setError('スキルの削除に失敗しました。')
+      setError('下書きの削除に失敗しました。')
+    }
+  }
+
+  const handleReset = async () => {
+    if (!window.confirm('公開中のスキル内容で、自分の下書きを上書きしますか？')) return
+
+    setSaving(true)
+    setError(null)
+    setNotice(null)
+    try {
+      const data = await resetSkillDrafts()
+      applyPayload(data)
+      resetForm()
+      setNotice('公開内容を下書きへ読み込みました。')
+    } catch {
+      setError('下書きのリセットに失敗しました。')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const handlePublish = async () => {
+    if (!window.confirm('この下書きを公開スキルに反映しますか？閲覧者に見える内容が変わります。')) {
+      return
+    }
+
+    setSaving(true)
+    setError(null)
+    setNotice(null)
+    try {
+      await publishSkillDrafts()
+      setNotice('公開スキルへ反映しました。')
+    } catch {
+      setError('公開に失敗しました。オーナー権限があるか確認してください。')
+    } finally {
+      setSaving(false)
     }
   }
 
@@ -124,8 +173,36 @@ const SkillsAdmin = () => {
         スキル管理
       </Typography>
       <Typography sx={{ color: 'text.secondary', mb: 2 }}>
-        ログイン後のみ操作できます。公開のスキル画面に反映されます。
+        編集内容はあなたの下書きです。公開ページ（/skills）へ反映できるのはオーナーのみです。
       </Typography>
+
+      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1} sx={{ mb: 2 }}>
+        <Button
+          variant="outlined"
+          onClick={() => void handleReset()}
+          disabled={saving || loading}
+          sx={{ textTransform: 'none' }}
+        >
+          公開内容を下書きへ読み込む
+        </Button>
+        {canPublish && (
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => void handlePublish()}
+            disabled={saving || loading}
+            sx={{ textTransform: 'none', fontWeight: 700 }}
+          >
+            下書きを公開する
+          </Button>
+        )}
+      </Stack>
+
+      {!canPublish && (
+        <Typography sx={{ color: 'text.secondary', mb: 2, fontSize: '0.9rem' }}>
+          このアカウントは公開権限がありません。下書きの試用のみ可能です。
+        </Typography>
+      )}
 
       <Paper
         component="form"
@@ -134,7 +211,7 @@ const SkillsAdmin = () => {
         sx={{ p: 2, mb: 3 }}
       >
         <Typography component="h2" variant="subtitle1" sx={{ fontWeight: 700, mb: 1.5 }}>
-          {editingId === null ? '新規追加' : `編集中（ID: ${editingId}）`}
+          {editingId === null ? '新規追加（下書き）' : `編集中（下書き ID: ${editingId}）`}
         </Typography>
         <Stack
           direction={{ xs: 'column', sm: 'row' }}
@@ -208,18 +285,23 @@ const SkillsAdmin = () => {
           {error}
         </Typography>
       )}
+      {notice && (
+        <Typography color="success.main" role="status" sx={{ mb: 2 }}>
+          {notice}
+        </Typography>
+      )}
 
       <Divider sx={{ mb: 2 }} />
 
       <Typography component="h2" variant="subtitle1" sx={{ fontWeight: 700, mb: 1 }}>
-        一覧
+        下書き一覧
       </Typography>
 
       {loading ? (
         <Typography color="text.secondary">読み込み中…</Typography>
       ) : (
         <TableContainer component={Paper} variant="outlined">
-          <Table size="small" aria-label="スキル一覧">
+          <Table size="small" aria-label="スキル下書き一覧">
             <TableHead>
               <TableRow>
                 <TableCell>カテゴリ</TableCell>
@@ -229,16 +311,16 @@ const SkillsAdmin = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {skills.map((skill) => (
-                <TableRow key={skill.id} selected={editingId === skill.id}>
-                  <TableCell>{categoryLabel(skill.category)}</TableCell>
-                  <TableCell>{skill.item}</TableCell>
-                  <TableCell align="right">{skill.term}</TableCell>
+              {drafts.map((draft) => (
+                <TableRow key={draft.id} selected={editingId === draft.id}>
+                  <TableCell>{categoryLabel(draft.category)}</TableCell>
+                  <TableCell>{draft.item}</TableCell>
+                  <TableCell align="right">{draft.term}</TableCell>
                   <TableCell align="right">
                     <Stack direction="row" spacing={1} justifyContent="flex-end">
                       <Button
                         size="small"
-                        onClick={() => startEdit(skill)}
+                        onClick={() => startEdit(draft)}
                         sx={{ textTransform: 'none' }}
                       >
                         編集
@@ -246,7 +328,7 @@ const SkillsAdmin = () => {
                       <Button
                         size="small"
                         color="error"
-                        onClick={() => void handleDelete(skill)}
+                        onClick={() => void handleDelete(draft)}
                         sx={{ textTransform: 'none' }}
                       >
                         削除
@@ -255,10 +337,10 @@ const SkillsAdmin = () => {
                   </TableCell>
                 </TableRow>
               ))}
-              {skills.length === 0 && (
+              {drafts.length === 0 && (
                 <TableRow>
                   <TableCell colSpan={4}>
-                    <Typography color="text.secondary">スキルがありません。</Typography>
+                    <Typography color="text.secondary">下書きがありません。</Typography>
                   </TableCell>
                 </TableRow>
               )}

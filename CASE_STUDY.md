@@ -62,22 +62,24 @@ Browser (Firebase Hosting)
 | Home (`/`) | トップ。アクセス数表示・ログイン導線 |
 | About (`/about`) | プロフィール、できること／案件の向き不向き、経歴・資格 |
 | Skills (`/skills`) | ソフト／ハードの経験年数（バー表示・公開 GET） |
-| スキル管理 (`/admin/skills`) | ログイン後のみ。スキルの一覧・追加・編集・削除 |
+| スキル管理 (`/admin/skills`) | ログイン後のみ。ユーザー別の下書き CRUD。公開反映はオーナーのみ |
 | Works (`/works`) | 職務年表＋各行の担当・技術概要 |
 | Contact (`/contact`) | お問合せ（API 経由でメール送信） |
 | ログイン (`/v1/auth`) | トークン認証（管理画面の入口） |
 
-## 6. 追加した業務機能（スキル管理 CRUD）
+## 6. 追加した業務機能（スキル下書き / オーナー公開）
 
-公開サイトのスキル一覧は誰でも読めますが、**作成・更新・削除はログイン必須**です。
+公開サイトのスキル一覧は誰でも読めます。ログインユーザーは**自分専用の下書き**を編集でき、**公開への反映はオーナーのみ**です。
 
 | 層 | 内容 |
 |----|------|
-| API | `GET /v1/skills`・`GET /v1/skills/:id` は公開。`POST` / `PATCH` / `DELETE` は Devise Token Auth |
-| フロント | `/admin/skills` を `RequireAuth` で保護。未ログインはログイン画面へ |
-| テスト | rails-api に request spec。フロントは Playwright で未ログイン拒否＋ログイン後の一覧／編集 |
+| 公開 API | `GET /v1/skills`（確定データ。閲覧者向け） |
+| 下書き API | `/v1/skill_drafts` の CRUD はログイン必須・ユーザー分離。`POST .../reset` で公開内容を再読込 |
+| 公開反映 | `POST /v1/skill_drafts/publish` は `SKILLS_OWNER_EMAIL` と一致するアカウントのみ |
+| フロント | `/admin/skills` を `RequireAuth` で保護。非オーナーには公開ボタンを出さない |
+| テスト | rails-api request spec（ユーザー分離・公開 403）。Playwright で未ログイン拒否・下書き編集・オーナー公開 |
 
-デモでの見方: ログイン → メニュー「スキル管理」→ 一覧・編集。公開の `/skills` に反映されます。
+デモでの見方: ログイン →「スキル管理」→ 下書きを編集。閲覧者の `/skills` はオーナーが「下書きを公開する」まで変わりません。
 
 ## 7. 工夫
 
