@@ -1,15 +1,8 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, LinearProgress, Box, Typography } from '@mui/material'
-import axios from 'axios'
 import { Fragment, useEffect, useMemo, useState } from 'react'
+import { fetchSkills } from '../apis/skills'
+import type { Skill } from '../types/Skill'
 
-interface Skill {
-  id: number
-  category: string
-  item: string
-  term: number
-}
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 /** バー表示の上限年数。これ以上は 100% で飽和 */
 const MAX_YEARS = 10
 
@@ -38,13 +31,11 @@ const categoryMeta = (category: string) =>
 const SkillTable = () => {
   const [skills, setSkills] = useState<Skill[]>([])
   useEffect(() => {
-    axios.get(`${API_BASE_URL}/skills`)
-    .then(response => {
-        setSkills(response.data)
-    })
-    .catch(error => {
+    fetchSkills()
+      .then(setSkills)
+      .catch((error) => {
         console.error('Error fetching skills:', error)
-    })
+      })
   }, [])
 
   const skillGroups = useMemo(() => {

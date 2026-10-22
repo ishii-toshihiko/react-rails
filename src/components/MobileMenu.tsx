@@ -7,20 +7,22 @@ import {
   Psychology as PsychologyIcon,
   Business as BusinessIcon,
   Mail as MailIcon,
+  Tune as TuneIcon,
 } from '@mui/icons-material'
-import { navItems, type NavItem } from '../data/navItems'
+import { adminNavItems, navItems, type AdminNavItem, type NavItem } from '../data/navItems'
 
 type MobileMenuProps = {
   open: boolean
   onClose: () => void
 }
 
-const iconMap: Record<NavItem['icon'], typeof HomeIcon> = {
+const iconMap: Record<NavItem['icon'] | AdminNavItem['icon'], typeof HomeIcon> = {
   home: HomeIcon,
   person: PersonIcon,
   skills: PsychologyIcon,
   works: BusinessIcon,
   mail: MailIcon,
+  adminSkills: TuneIcon,
 }
 
 const MobileMenu = ({ open, onClose }: MobileMenuProps) => {
@@ -63,7 +65,7 @@ const MobileMenu = ({ open, onClose }: MobileMenuProps) => {
         </Box>
 
         <List disablePadding sx={{ p: 1.5, display: 'flex', flexDirection: 'column', gap: 1 }}>
-          {navItems.map(({ icon, label, path, accent }) => {
+          {[...navItems, ...adminNavItems].map(({ icon, label, path, accent }) => {
             const active = location.pathname === path
             const ItemIcon = iconMap[icon]
             return (

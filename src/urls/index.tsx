@@ -20,3 +20,4 @@ export const loginIndex: string = `${DEFAULT_API_LOCALHOST}/auth/sign_in`;
 export const logoutIndex: string = `${DEFAULT_API_LOCALHOST}/auth/sign_out`;
 export const pageViewsIndex: string = `${DEFAULT_API_LOCALHOST}/page_views`;
 export const contactsIndex: string = `${DEFAULT_API_LOCALHOST}/contacts`;
+export const skillsIndex: string = `${DEFAULT_API_LOCALHOST}/skills`;

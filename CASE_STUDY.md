@@ -61,19 +61,33 @@ Browser (Firebase Hosting)
 |------|------|
 | Home (`/`) | トップ。アクセス数表示・ログイン導線 |
 | About (`/about`) | プロフィール、できること／案件の向き不向き、経歴・資格 |
-| Skills (`/skills`) | ソフト／ハードの経験年数（バー表示） |
+| Skills (`/skills`) | ソフト／ハードの経験年数（バー表示・公開 GET） |
+| スキル管理 (`/admin/skills`) | ログイン後のみ。スキルの一覧・追加・編集・削除 |
 | Works (`/works`) | 職務年表＋各行の担当・技術概要 |
 | Contact (`/contact`) | お問合せ（API 経由でメール送信） |
-| ログイン (`/v1/auth`) | トークン認証（管理・プレビュー用） |
+| ログイン (`/v1/auth`) | トークン認証（管理画面の入口） |
 
-## 6. 工夫
+## 6. 追加した業務機能（スキル管理 CRUD）
+
+公開サイトのスキル一覧は誰でも読めますが、**作成・更新・削除はログイン必須**です。
+
+| 層 | 内容 |
+|----|------|
+| API | `GET /v1/skills`・`GET /v1/skills/:id` は公開。`POST` / `PATCH` / `DELETE` は Devise Token Auth |
+| フロント | `/admin/skills` を `RequireAuth` で保護。未ログインはログイン画面へ |
+| テスト | rails-api に request spec。フロントは Playwright で未ログイン拒否＋ログイン後の一覧／編集 |
+
+デモでの見方: ログイン → メニュー「スキル管理」→ 一覧・編集。公開の `/skills` に反映されます。
+
+## 7. 工夫
 
 - お問合せはフロントから Resend を直接叩かず、API 経由（キー非公開）
 - バリデーション・honeypot・簡易レート制限
 - 秘密情報は GitHub Secrets → Secret Manager → Cloud Run のみ
 - DB は案件要件に応じて Cloud SQL / Neon を使い分け（デモは Neon で低運用）
-- **Playwright スモーク**（`e2e/smoke.spec.ts`）を CI の deploy 前に実行  
-  （公開ページ表示・お問合せフォーム・ログイン時メニュー遷移）
+- 公開読み取りと管理書き込みの権限境界を API／画面の両方で明示
+- **Playwright**（`e2e/smoke.spec.ts`＋`e2e/skills-admin.spec.ts`）を CI の deploy 前に実行  
+  （公開ページ・お問合せフォーム・メニュー遷移・スキル管理の権限境界）
 
 ## 向いている案件（目安）
 

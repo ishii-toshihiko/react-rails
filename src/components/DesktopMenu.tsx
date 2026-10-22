@@ -1,9 +1,10 @@
 import { Link, useLocation } from 'react-router-dom'
 import { Button, Box } from '@mui/material'
-import { navItems } from '../data/navItems'
+import { adminNavItems, navItems } from '../data/navItems'
 
 const DesktopMenu = () => {
   const location = useLocation()
+  const items = [...navItems, ...adminNavItems]
 
   return (
     <Box
@@ -23,7 +24,7 @@ const DesktopMenu = () => {
         width: '100%',
       }}
     >
-      {navItems.map(({ label, path, accent }) => {
+      {items.map(({ label, path, accent }) => {
         const active = location.pathname === path
         return (
           <Button

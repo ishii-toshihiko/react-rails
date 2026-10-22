@@ -13,4 +13,15 @@ export const navItems = [
   { label: 'お問い合せ', path: '/contact', accent: contactAccent, icon: 'mail' },
 ] as const
 
+/** ログイン後のみ表示する管理ナビ */
+export const adminNavItems = [
+  {
+    label: 'スキル管理',
+    path: '/admin/skills',
+    accent: '#00695c',
+    icon: 'adminSkills' as const,
+  },
+] as const
+
 export type NavItem = (typeof navItems)[number]
+export type AdminNavItem = (typeof adminNavItems)[number]

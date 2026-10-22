@@ -77,7 +77,7 @@ test('ログイン状態ではメニューから各画面へ遷移できる', as
   await page.goto('/')
 
   for (const item of menuItems) {
-    await page.getByRole('link', { name: item.label }).click()
+    await page.getByRole('link', { name: item.label, exact: true }).click()
     await expect(page).toHaveURL(new RegExp(`${item.path}$`))
   }
 })
