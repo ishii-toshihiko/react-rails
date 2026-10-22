@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
 
 const pages = [
-  { path: '/', text: "Ishii's Portfolio" },
+  { path: '/', text: "Ishii Toshihiko's Portfolio" },
   { path: '/about', text: 'できること・案件の向き不向き' },
   { path: '/skills', text: 'Web がメイン、回路・FPGA も対応' },
   { path: '/works', text: '職務経歴' },
@@ -50,7 +50,7 @@ test.beforeEach(async ({ page }) => {
 test('公開ページが表示される', async ({ page }) => {
   for (const entry of pages) {
     await page.goto(entry.path)
-    await expect(page.getByText("Ishii's Portfolio")).toBeVisible()
+    await expect(page.getByText("Ishii Toshihiko's Portfolio")).toBeVisible()
     await expect(page.getByText(entry.text).first()).toBeVisible()
   }
 
