@@ -2,9 +2,13 @@ import { Link, useLocation } from 'react-router-dom'
 import { Button, Box } from '@mui/material'
 import { adminNavItems, navItems } from '../data/navItems'
 
-const DesktopMenu = () => {
+type DesktopMenuProps = {
+  showAdmin?: boolean
+}
+
+const DesktopMenu = ({ showAdmin = false }: DesktopMenuProps) => {
   const location = useLocation()
-  const items = [...navItems, ...adminNavItems]
+  const items = showAdmin ? [...navItems, ...adminNavItems] : [...navItems]
 
   return (
     <Box

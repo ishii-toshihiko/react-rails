@@ -14,6 +14,7 @@ import { adminNavItems, navItems, type AdminNavItem, type NavItem } from '../dat
 type MobileMenuProps = {
   open: boolean
   onClose: () => void
+  showAdmin?: boolean
 }
 
 const iconMap: Record<NavItem['icon'] | AdminNavItem['icon'], typeof HomeIcon> = {
@@ -25,8 +26,9 @@ const iconMap: Record<NavItem['icon'] | AdminNavItem['icon'], typeof HomeIcon> =
   adminSkills: TuneIcon,
 }
 
-const MobileMenu = ({ open, onClose }: MobileMenuProps) => {
+const MobileMenu = ({ open, onClose, showAdmin = false }: MobileMenuProps) => {
   const location = useLocation()
+  const items = showAdmin ? [...navItems, ...adminNavItems] : [...navItems]
 
   return (
     <Drawer anchor="left" open={open} onClose={onClose}>
@@ -65,7 +67,7 @@ const MobileMenu = ({ open, onClose }: MobileMenuProps) => {
         </Box>
 
         <List disablePadding sx={{ p: 1.5, display: 'flex', flexDirection: 'column', gap: 1 }}>
-          {[...navItems, ...adminNavItems].map(({ icon, label, path, accent }) => {
+          {items.map(({ icon, label, path, accent }) => {
             const active = location.pathname === path
             const ItemIcon = iconMap[icon]
             return (

@@ -117,7 +117,7 @@ const Header = ({ loggedIn }: HeaderProps) => {
         </Box>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, flexShrink: 0 }}>
-          {loggedIn && isMobile && (
+          {isMobile && (
             <IconButton
               aria-label="メニューを開く"
               onClick={() => setMobileOpen(true)}
@@ -204,9 +204,13 @@ const Header = ({ loggedIn }: HeaderProps) => {
         )}
       </Box>
 
-      {loggedIn && !isMobile && <DesktopMenu />}
-      {loggedIn && isMobile && (
-        <MobileMenu open={mobileOpen} onClose={() => setMobileOpen(false)} />
+      {!isMobile && <DesktopMenu showAdmin={loggedIn} />}
+      {isMobile && (
+        <MobileMenu
+          open={mobileOpen}
+          onClose={() => setMobileOpen(false)}
+          showAdmin={loggedIn}
+        />
       )}
     </Box>
   )

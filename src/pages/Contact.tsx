@@ -1,10 +1,9 @@
 import { Divider } from '@mui/material'
-import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react'
+import { useState, type ChangeEvent, type FormEvent } from 'react'
 import { TextField, Button, Box, Typography, Chip } from '@mui/material'
 import MarkEmailReadOutlinedIcon from '@mui/icons-material/MarkEmailReadOutlined'
 import { sendContact } from '../apis/sendContact'
 import { contactAccent } from '../data/navItems'
-import { isAuthenticated } from '../lib/auth'
 import brandMark from '../assets/logo/works-it-mark-pc-person-laptop.svg'
 
 const previewValue = (value: string): string => {
@@ -23,11 +22,6 @@ const Contact = () => {
   })
   const [submitting, setSubmitting] = useState(false)
   const [status, setStatus] = useState<FormStatus>('idle')
-  const [loggedIn, setLoggedIn] = useState(false)
-
-  useEffect(() => {
-    setLoggedIn(isAuthenticated())
-  }, [])
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -144,62 +138,60 @@ const Contact = () => {
           />
         </div>
 
-        {loggedIn && (
-          <Box className="contact-preview" aria-live="polite">
-            <Box className="contact-preview-heading">
-              <Chip
-                size="small"
-                variant="outlined"
-                icon={<MarkEmailReadOutlinedIcon />}
-                label="プレビュー"
-                sx={{
-                  color: contactAccent,
-                  borderColor: contactAccent,
-                  '& .MuiChip-icon': { color: contactAccent },
-                }}
-              />
-              <Typography className="contact-preview-title" component="h2">
-                送信内容のプレビュー
+        <Box className="contact-preview" aria-live="polite">
+          <Box className="contact-preview-heading">
+            <Chip
+              size="small"
+              variant="outlined"
+              icon={<MarkEmailReadOutlinedIcon />}
+              label="プレビュー"
+              sx={{
+                color: contactAccent,
+                borderColor: contactAccent,
+                '& .MuiChip-icon': { color: contactAccent },
+              }}
+            />
+            <Typography className="contact-preview-title" component="h2">
+              送信内容のプレビュー
+            </Typography>
+          </Box>
+          <Typography className="contact-preview-note">
+            下の内容が、そのまま担当者宛メールになります（まだ送信されていません）。
+          </Typography>
+
+          <Box className="contact-preview-mail" role="region" aria-label="メールプレビュー">
+            <Box className="contact-preview-headers">
+              <Typography className="contact-preview-header-row" component="div">
+                <span className="contact-preview-label">件名</span>
+                <span className="contact-preview-value">
+                  Portfolio contact from {previewValue(formData.name)}
+                </span>
+              </Typography>
+              <Typography className="contact-preview-header-row" component="div">
+                <span className="contact-preview-label">From</span>
+                <span className="contact-preview-value">サイト通知用アドレス</span>
+              </Typography>
+              <Typography className="contact-preview-header-row" component="div">
+                <span className="contact-preview-label">To</span>
+                <span className="contact-preview-value">担当者宛（設定アドレス）</span>
+              </Typography>
+              <Typography className="contact-preview-header-row" component="div">
+                <span className="contact-preview-label">Reply-To</span>
+                <span className="contact-preview-value">{previewValue(formData.email)}</span>
               </Typography>
             </Box>
-            <Typography className="contact-preview-note">
-              下の内容が、そのまま担当者宛メールになります（まだ送信されていません）。
-            </Typography>
-
-            <Box className="contact-preview-mail" role="region" aria-label="メールプレビュー">
-              <Box className="contact-preview-headers">
-                <Typography className="contact-preview-header-row" component="div">
-                  <span className="contact-preview-label">件名</span>
-                  <span className="contact-preview-value">
-                    Portfolio contact from {previewValue(formData.name)}
-                  </span>
-                </Typography>
-                <Typography className="contact-preview-header-row" component="div">
-                  <span className="contact-preview-label">From</span>
-                  <span className="contact-preview-value">サイト通知用アドレス</span>
-                </Typography>
-                <Typography className="contact-preview-header-row" component="div">
-                  <span className="contact-preview-label">To</span>
-                  <span className="contact-preview-value">担当者宛（設定アドレス）</span>
-                </Typography>
-                <Typography className="contact-preview-header-row" component="div">
-                  <span className="contact-preview-label">Reply-To</span>
-                  <span className="contact-preview-value">{previewValue(formData.email)}</span>
-                </Typography>
-              </Box>
-              <Typography className="contact-preview-message" component="pre">
-                {`Name: ${previewValue(formData.name)}
+            <Typography className="contact-preview-message" component="pre">
+              {`Name: ${previewValue(formData.name)}
 Email: ${previewValue(formData.email)}
 
 Message:
 ${previewValue(formData.message)}`}
-              </Typography>
-            </Box>
-            <Typography className="contact-preview-footer">
-              ↑ この内容で送信されます
             </Typography>
           </Box>
-        )}
+          <Typography className="contact-preview-footer">
+            ↑ この内容で送信されます
+          </Typography>
+        </Box>
 
         <div className="contact-field">
           <Button

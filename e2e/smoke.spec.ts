@@ -64,10 +64,22 @@ test('お問い合わせフォームが表示される', async ({ page }) => {
   await expect(page.getByRole('textbox', { name: 'お名前' })).toBeVisible()
   await expect(page.getByRole('textbox', { name: 'メールアドレス' })).toBeVisible()
   await expect(page.getByRole('textbox', { name: 'お問い合わせ内容' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: '送信内容のプレビュー' })).toBeVisible()
+  await expect(page.getByRole('region', { name: 'メールプレビュー' })).toBeVisible()
   await expect(page.getByRole('button', { name: '送信する' })).toBeVisible()
 })
 
-test('ログイン状態ではメニューから各画面へ遷移できる', async ({ page }) => {
+test('未ログインでもメニューから公開画面へ遷移できる', async ({ page }) => {
+  await page.goto('/')
+  await expect(page.getByRole('link', { name: 'スキル管理' })).toHaveCount(0)
+
+  for (const item of menuItems) {
+    await page.getByRole('link', { name: item.label, exact: true }).click()
+    await expect(page).toHaveURL(new RegExp(`${item.path}$`))
+  }
+})
+
+test('ログイン状態ではメニューにスキル管理も表示される', async ({ page }) => {
   await page.addInitScript(() => {
     localStorage.setItem('access-token', 'smoke-token')
     localStorage.setItem('client', 'smoke-client')
@@ -75,6 +87,7 @@ test('ログイン状態ではメニューから各画面へ遷移できる', as
   })
 
   await page.goto('/')
+  await expect(page.getByRole('link', { name: 'スキル管理' })).toBeVisible()
 
   for (const item of menuItems) {
     await page.getByRole('link', { name: item.label, exact: true }).click()
